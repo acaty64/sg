@@ -16,6 +16,7 @@ window.Vue = require('vue');
  */
 
 Vue.component('example', require('./components/Example.vue'));
+Vue.component('actas-component', require('./components/actas/ActasComponent.vue'));
 
 const app = new Vue({
     el: '#app'
