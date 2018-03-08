@@ -32,5 +32,15 @@ Route::post('/api/pdf', [
 		'as'	=> 'api.pdf.search',
 		'uses'	=> 'Api\PDFController@searchTextInPDF',	
 	]);
-/*
-*/
+
+
+
+Route::get('/notes', function () {
+    return view('users.notes');
+});
+
+
+Route::prefix ('api') -> group (function () {
+	Route::resource ('notes', 'Api\NotesController');
+	Route::put ('/notes/{note}/toggleFavourite', 'Api\NotesController@toggleFavourite');
+});

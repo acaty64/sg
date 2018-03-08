@@ -14,7 +14,7 @@ class SearchInPDFTest extends TestCase
     public function searchText()
     {
         $request = [
-                'carpeta' => 'consejo',
+                'carpeta' => 'asamblea',
                 'texto'   => 'Macedo'
             ];
         $rpta = $this->post('/api/pdf', $request);

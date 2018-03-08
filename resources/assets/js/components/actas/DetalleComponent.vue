@@ -14,10 +14,16 @@
 </template>
 
 <script>
+    import axios from 'axios';
+    import { mapState } from 'vuex';
+
     export default {
         mounted() {
-            console.log('DetalleComponent mounted.')
+            console.log('DetalleComponent mounted.');
         },
-
+        computed: mapState([
+                'actas',
+        ]),
+        
     }
 </script>

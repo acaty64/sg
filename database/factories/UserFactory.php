@@ -23,3 +23,11 @@ $factory->define(App\User::class, function (Faker $faker) {
         'remember_token' => str_random(10),
     ];
 });
+
+
+$factory->define(App\Note::class, function (Faker $faker) {
+    return [
+        'title' => str_limit($faker->name, 10),
+        'is_favourite' => false
+    ];
+});
