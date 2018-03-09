@@ -33,7 +33,10 @@ Route::post('/api/pdf', [
 		'uses'	=> 'Api\PDFController@searchTextInPDF',	
 	]);
 
-
+Route::post('/api/view/pdf', [
+		'as'	=> 'view.pdf.search',
+		'uses'	=> 'Api\PDFController@viewActa',	
+	]);
 
 Route::get('/notes', function () {
     return view('users.notes');

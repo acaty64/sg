@@ -93,4 +93,18 @@ class PDFController extends Controller
 
 	}
 
+    public function viewActa(Request $request)
+    {
+        $tipo = $request->tipo;
+        $filename = $request->acta;
+        $file_pdf = 'pdf/'.$tipo.'/'.$filename;
+        $arch_pdf = asset('pdf\\'.$tipo.'\\').$filename;
+        if(!file_exists($file_pdf)){
+            $arch_pdf = asset('pdf\\000000.pdf');
+        }
+        return view('users.pdfactas')
+            ->with('arch_pdf',$arch_pdf)
+            ->with('tipo',$tipo);
+    }
+
 }

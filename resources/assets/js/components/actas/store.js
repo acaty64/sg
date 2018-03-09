@@ -21,8 +21,7 @@ export const store = new Vuex.Store({
         protocol: window.location.protocol,
         URLdomain: window.location.host,
 	},
-
-	mutations:{
+    mutations:{
         carpeta: (state, carpeta) => {
             state.carpeta = carpeta;
         },
@@ -43,11 +42,21 @@ export const store = new Vuex.Store({
         },
 	},
     actions:{
-        changeCarpeta: (context, carpeta)=> {
-            context.commit('carpeta', carpeta)
+        changeData: (context, {carpeta, texto})=> {
+console.log('changeData: '+texto );
+            context.commit('carpeta', carpeta);
+            context.commit('texto', texto);
         },
-        changeTexto: (context, texto)=> {
-            context.commit('texto', texto)
+        viewActa: (context, {tipo, acta}) => {
+            var request = {
+                'tipo': tipo,
+                'arch_pdf': acta
+            };
+            var url = state.protocol+'//'+state.URLdomain+'/api/pdf/'
+            axios.post(url, request).then(response=>{
+                //state.success = response.data.success;
+                console.log('ok viewActa');
+            });
         },
 
 

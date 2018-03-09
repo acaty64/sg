@@ -45,8 +45,7 @@
         methods:{
             buscar(carpeta, texto){
                 //alert('buscar(carpeta, texto):'+ carpeta+' - '+texto);
-                this.$store.dispatch('changeCarpeta', carpeta);
-                this.$store.dispatch('changeTexto', texto);
+                this.$store.dispatch('changeData', {carpeta, texto});
                 this.$store.commit('buscar');
             }
         },

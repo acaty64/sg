@@ -44283,8 +44283,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         buscar: function buscar(carpeta, texto) {
             //alert('buscar(carpeta, texto):'+ carpeta+' - '+texto);
-            this.$store.dispatch('changeCarpeta', carpeta);
-            this.$store.dispatch('changeTexto', texto);
+            this.$store.dispatch('changeData', { carpeta: carpeta, texto: texto });
             this.$store.commit('buscar');
         }
     },
@@ -44522,6 +44521,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -44531,8 +44534,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         console.log('DetalleComponent mounted.');
     },
 
-    computed: Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapState */])(['actas'])
-
+    computed: Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapState */])({
+        actas: function actas(state) {
+            return state.actas;
+        },
+        protocol: function protocol(state) {
+            return state.protocol;
+        },
+        URLdomain: function URLdomain(state) {
+            return state.URLdomain;
+        }
+    }),
+    methods: {
+        href: function href(protocol, URLdomain, acta) {
+            return protocol + '//' + URLdomain + '/' + acta;
+        }
+    }
 });
 
 /***/ }),
@@ -44543,32 +44560,36 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "panel panel-default" }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-6" }, [
-          _c("div", { staticClass: "card card-default" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _vm._v("ActasComponent")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _vm._v(
-                "\n                    Aqui vienen las actas.\n                "
-              )
-            ])
+  return _c("div", { staticClass: "panel panel-default" }, [
+    _c("div", { staticClass: "row justify-content-center" }, [
+      _c("div", { staticClass: "col-md-6" }, [
+        _c("div", { staticClass: "card card-default" }, [
+          _c("div", { staticClass: "card-header" }, [_vm._v("ActasComponent")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c(
+              "ul",
+              _vm._l(_vm.actas, function(acta) {
+                return _c("li", [
+                  _c(
+                    "a",
+                    {
+                      attrs: {
+                        href: _vm.href(_vm.protocol, _vm.URLdomain, acta)
+                      }
+                    },
+                    [_vm._v(_vm._s(acta))]
+                  )
+                ])
+              })
+            )
           ])
         ])
       ])
     ])
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -44631,7 +44652,6 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
         protocol: window.location.protocol,
         URLdomain: window.location.host
     },
-
     mutations: {
         carpeta: function carpeta(state, _carpeta) {
             state.carpeta = _carpeta;
@@ -44653,11 +44673,27 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
         }
     },
     actions: {
-        changeCarpeta: function changeCarpeta(context, carpeta) {
+        changeData: function changeData(context, _ref) {
+            var carpeta = _ref.carpeta,
+                texto = _ref.texto;
+
+            console.log('changeData: ' + texto);
             context.commit('carpeta', carpeta);
-        },
-        changeTexto: function changeTexto(context, texto) {
             context.commit('texto', texto);
+        },
+        viewActa: function viewActa(context, _ref2) {
+            var tipo = _ref2.tipo,
+                acta = _ref2.acta;
+
+            var request = {
+                'tipo': tipo,
+                'arch_pdf': acta
+            };
+            var url = state.protocol + '//' + state.URLdomain + '/api/pdf/';
+            axios.post(url, request).then(function (response) {
+                //state.success = response.data.success;
+                console.log('ok viewActa');
+            });
         }
 
     }
