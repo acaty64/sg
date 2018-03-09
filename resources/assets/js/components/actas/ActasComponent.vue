@@ -18,7 +18,7 @@
         components:{
             opciones, detalle
         },
-        computed: mapState(['opciones', 'texto', 'carpeta']),
+        computed: mapState(['opciones', 'texto', 'carpeta', 'arch_pdf']),
         mounted() {
             console.log('ActasComponent mounted.')
         },

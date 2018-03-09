@@ -20,6 +20,7 @@ export const store = new Vuex.Store({
         carpeta: "consejo",
         protocol: window.location.protocol,
         URLdomain: window.location.host,
+        arch_pdf: '',
 	},
     mutations:{
         carpeta: (state, carpeta) => {
@@ -27,6 +28,9 @@ export const store = new Vuex.Store({
         },
         texto: (state, texto) => {
             state.texto = texto;
+        },
+        arch_pdf: (state, arch_pdf) => {
+            state.arch_pdf = arch_pdf;
         },
         buscar: (state) => {
             var request = {
@@ -43,20 +47,25 @@ export const store = new Vuex.Store({
 	},
     actions:{
         changeData: (context, {carpeta, texto})=> {
-console.log('changeData: '+texto );
             context.commit('carpeta', carpeta);
             context.commit('texto', texto);
         },
-        viewActa: (context, {tipo, acta}) => {
+        viewActa: (context, acta) => {
+            var arch_pdf = context.state.protocol+'//'+context.state.URLdomain+'/public/'+context.state.carpeta+'/'+acta;
+            context.commit('arch_pdf', arch_pdf);
+/*
             var request = {
-                'tipo': tipo,
+                'tipo': state.carpeta,
                 'arch_pdf': acta
             };
-            var url = state.protocol+'//'+state.URLdomain+'/api/pdf/'
+            var url = state.protocol+'//'+state.URLdomain+'/admin/view/pdf/'
             axios.post(url, request).then(response=>{
                 //state.success = response.data.success;
-                console.log('ok viewActa');
+                console.log('url viewActa: '+url);
+                console.log('request.tipo viewActa: '+request.tipo);
+                console.log('request.arch_pdf viewActa: '+request.arch_pdf);
             });
+*/
         },
 
 

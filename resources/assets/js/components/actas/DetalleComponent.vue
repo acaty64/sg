@@ -3,11 +3,11 @@
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card card-default">
-                    <div class="card-header">ActasComponent</div>
+                    <div class="card-header">Actas: {{state.carpeta}}</div>
                     <div class="card-body">
                         <ul>
                             <li v-for='acta in actas'>
-                                <a :href='href(protocol, URLdomain, acta)'>{{ acta }}</a>
+                                <a :href='href(state, acta)' target="_blank"> {{ acta }} </a>
                             </li>
                         </ul>
                     </div>
@@ -27,11 +27,17 @@
         },
         computed: mapState({
             actas: (state) => state.actas,
-            protocol: (state) => state.protocol,
-            URLdomain: (state) => state.URLdomain,
+            state: (state) => state,
+//            protocol: (state) => state.protocol,
+//            URLdomain: (state) => state.URLdomain,
         }),
         methods: {
-            href: (protocol, URLdomain, acta) => protocol+'//'+URLdomain+'/'+acta,
+            viewActa(acta) {
+                this.$store.dispatch('viewActa', acta);
+            },
+            href(state, acta) { 
+                return '/admin/view/pdf/'+state.carpeta+'/'+acta;
+            },
         }
     }
 </script>

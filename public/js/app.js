@@ -44176,7 +44176,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     components: {
         opciones: __WEBPACK_IMPORTED_MODULE_0__OpcionesComponent___default.a, detalle: __WEBPACK_IMPORTED_MODULE_1__DetalleComponent___default.a
     },
-    computed: Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["b" /* mapState */])(['opciones', 'texto', 'carpeta']),
+    computed: Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["b" /* mapState */])(['opciones', 'texto', 'carpeta', 'arch_pdf']),
     mounted: function mounted() {
         console.log('ActasComponent mounted.');
     }
@@ -44538,16 +44538,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         actas: function actas(state) {
             return state.actas;
         },
-        protocol: function protocol(state) {
-            return state.protocol;
-        },
-        URLdomain: function URLdomain(state) {
-            return state.URLdomain;
+        state: function state(_state) {
+            return _state;
         }
+        //            protocol: (state) => state.protocol,
+        //            URLdomain: (state) => state.URLdomain,
     }),
     methods: {
-        href: function href(protocol, URLdomain, acta) {
-            return protocol + '//' + URLdomain + '/' + acta;
+        viewActa: function viewActa(acta) {
+            this.$store.dispatch('viewActa', acta);
+        },
+        href: function href(state, acta) {
+            return '/admin/view/pdf/' + state.carpeta + '/' + acta;
         }
     }
 });
@@ -44564,7 +44566,9 @@ var render = function() {
     _c("div", { staticClass: "row justify-content-center" }, [
       _c("div", { staticClass: "col-md-6" }, [
         _c("div", { staticClass: "card card-default" }, [
-          _c("div", { staticClass: "card-header" }, [_vm._v("ActasComponent")]),
+          _c("div", { staticClass: "card-header" }, [
+            _vm._v("Actas: " + _vm._s(_vm.state.carpeta))
+          ]),
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
             _c(
@@ -44575,10 +44579,11 @@ var render = function() {
                     "a",
                     {
                       attrs: {
-                        href: _vm.href(_vm.protocol, _vm.URLdomain, acta)
+                        href: _vm.href(_vm.state, acta),
+                        target: "_blank"
                       }
                     },
-                    [_vm._v(_vm._s(acta))]
+                    [_vm._v(" " + _vm._s(acta) + " ")]
                   )
                 ])
               })
@@ -44650,7 +44655,8 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
         }],
         carpeta: "consejo",
         protocol: window.location.protocol,
-        URLdomain: window.location.host
+        URLdomain: window.location.host,
+        arch_pdf: ''
     },
     mutations: {
         carpeta: function carpeta(state, _carpeta) {
@@ -44658,6 +44664,9 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
         },
         texto: function texto(state, _texto) {
             state.texto = _texto;
+        },
+        arch_pdf: function arch_pdf(state, _arch_pdf) {
+            state.arch_pdf = _arch_pdf;
         },
         buscar: function buscar(state) {
             var request = {
@@ -44677,23 +44686,25 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
             var carpeta = _ref.carpeta,
                 texto = _ref.texto;
 
-            console.log('changeData: ' + texto);
             context.commit('carpeta', carpeta);
             context.commit('texto', texto);
         },
-        viewActa: function viewActa(context, _ref2) {
-            var tipo = _ref2.tipo,
-                acta = _ref2.acta;
-
-            var request = {
-                'tipo': tipo,
-                'arch_pdf': acta
-            };
-            var url = state.protocol + '//' + state.URLdomain + '/api/pdf/';
-            axios.post(url, request).then(function (response) {
-                //state.success = response.data.success;
-                console.log('ok viewActa');
-            });
+        viewActa: function viewActa(context, acta) {
+            var arch_pdf = context.state.protocol + '//' + context.state.URLdomain + '/public/' + context.state.carpeta + '/' + acta;
+            context.commit('arch_pdf', arch_pdf);
+            /*
+                        var request = {
+                            'tipo': state.carpeta,
+                            'arch_pdf': acta
+                        };
+                        var url = state.protocol+'//'+state.URLdomain+'/admin/view/pdf/'
+                        axios.post(url, request).then(response=>{
+                            //state.success = response.data.success;
+                            console.log('url viewActa: '+url);
+                            console.log('request.tipo viewActa: '+request.tipo);
+                            console.log('request.arch_pdf viewActa: '+request.arch_pdf);
+                        });
+            */
         }
 
     }

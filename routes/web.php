@@ -33,9 +33,9 @@ Route::post('/api/pdf', [
 		'uses'	=> 'Api\PDFController@searchTextInPDF',	
 	]);
 
-Route::post('/api/view/pdf', [
+Route::get('/admin/view/pdf/{carpeta}/{acta}', [
 		'as'	=> 'view.pdf.search',
-		'uses'	=> 'Api\PDFController@viewActa',	
+		'uses'	=> 'Admin\PDFController@viewActa',	
 	]);
 
 Route::get('/notes', function () {
