@@ -21,18 +21,23 @@ export const store = new Vuex.Store({
         protocol: window.location.protocol,
         URLdomain: window.location.host,
         arch_pdf: '',
+        loading: false,
 	},
     mutations:{
         carpeta: (state, carpeta) => {
             state.carpeta = carpeta;
         },
+
         texto: (state, texto) => {
             state.texto = texto;
         },
+
         arch_pdf: (state, arch_pdf) => {
             state.arch_pdf = arch_pdf;
         },
+        
         buscar: (state) => {
+            state.loading = true;
             var request = {
                 'carpeta': state.carpeta,
                 'texto': state.texto
@@ -42,6 +47,7 @@ export const store = new Vuex.Store({
             axios.post(url, request).then(response=>{
                 state.actas = response.data.data;
                 console.log('state.actas: ', state.actas);
+                state.loading = false;
             });
         },
 	},
@@ -50,22 +56,10 @@ export const store = new Vuex.Store({
             context.commit('carpeta', carpeta);
             context.commit('texto', texto);
         },
+
         viewActa: (context, acta) => {
             var arch_pdf = context.state.protocol+'//'+context.state.URLdomain+'/public/'+context.state.carpeta+'/'+acta;
             context.commit('arch_pdf', arch_pdf);
-/*
-            var request = {
-                'tipo': state.carpeta,
-                'arch_pdf': acta
-            };
-            var url = state.protocol+'//'+state.URLdomain+'/admin/view/pdf/'
-            axios.post(url, request).then(response=>{
-                //state.success = response.data.success;
-                console.log('url viewActa: '+url);
-                console.log('request.tipo viewActa: '+request.tipo);
-                console.log('request.arch_pdf viewActa: '+request.arch_pdf);
-            });
-*/
         },
 
 

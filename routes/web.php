@@ -19,6 +19,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/files', function () {
+    return view('users.files');
+});
+
 Route::get('/actas', function () {
     return view('users.actas');
 });
@@ -37,13 +41,3 @@ Route::get('/admin/view/pdf/{carpeta}/{acta}', [
 		'as'	=> 'view.pdf.search',
 		'uses'	=> 'Admin\PDFController@viewActa',	
 	]);
-
-Route::get('/notes', function () {
-    return view('users.notes');
-});
-
-
-Route::prefix ('api') -> group (function () {
-	Route::resource ('notes', 'Api\NotesController');
-	Route::put ('/notes/{note}/toggleFavourite', 'Api\NotesController@toggleFavourite');
-});

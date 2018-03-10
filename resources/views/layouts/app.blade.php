@@ -37,8 +37,8 @@
                     <!-- Left Side Of Navbar -->
                         @guest
                             <ul class="nav navbar-nav list-group-item list-inline">
-                                <h4>Secretaría General</h4>
-                                <!-&nbsp;->
+                                <li><a href="/actas">Búsqueda</a></li>
+                                <li><a href="/files">Archivos</a></li>
                             </ul>
                         @endguest
 

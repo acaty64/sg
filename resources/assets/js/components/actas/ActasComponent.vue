@@ -1,10 +1,15 @@
 <template>
     <div>
-        <div>
-            <opciones/>
-        </div>    
-        <div>
-            <detalle/>
+        <div v-if="loading">
+            <img src="http://www.gifmania.com/Gif-Animados-Web/Imagenes-Rotulos-Webs/Rotulos-Cargando/Chargement-62163.gif" alt="rótulos cargando - GIFMANIA" />
+        </div>
+        <div v-else>            
+            <div>
+                <opciones/>
+            </div>    
+            <div>
+                <detalle/>
+            </div>
         </div>
     </div>
 </template>
@@ -18,7 +23,7 @@
         components:{
             opciones, detalle
         },
-        computed: mapState(['opciones', 'texto', 'carpeta', 'arch_pdf']),
+        computed: mapState(['opciones', 'texto', 'carpeta', 'arch_pdf', 'loading']),
         mounted() {
             console.log('ActasComponent mounted.')
         },

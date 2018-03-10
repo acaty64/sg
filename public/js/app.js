@@ -44167,6 +44167,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -44176,7 +44181,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     components: {
         opciones: __WEBPACK_IMPORTED_MODULE_0__OpcionesComponent___default.a, detalle: __WEBPACK_IMPORTED_MODULE_1__DetalleComponent___default.a
     },
-    computed: Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["b" /* mapState */])(['opciones', 'texto', 'carpeta', 'arch_pdf']),
+    computed: Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["b" /* mapState */])(['opciones', 'texto', 'carpeta', 'arch_pdf', 'loading']),
     mounted: function mounted() {
         console.log('ActasComponent mounted.');
     }
@@ -44265,6 +44270,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -44282,7 +44289,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         buscar: function buscar(carpeta, texto) {
-            //alert('buscar(carpeta, texto):'+ carpeta+' - '+texto);
             this.$store.dispatch('changeData', { carpeta: carpeta, texto: texto });
             this.$store.commit('buscar');
         }
@@ -44416,17 +44422,19 @@ var render = function() {
           })
         ]),
         _vm._v(" "),
-        _c(
-          "button",
-          {
-            on: {
-              click: function($event) {
-                _vm.buscar(_vm.xcarpeta, _vm.xtexto)
+        _c("div", [
+          _c(
+            "button",
+            {
+              on: {
+                click: function($event) {
+                  _vm.buscar(_vm.xcarpeta, _vm.xtexto)
+                }
               }
-            }
-          },
-          [_vm._v("Buscar")]
-        )
+            },
+            [_vm._v("Buscar")]
+          )
+        ])
       ])
     ])
   ])
@@ -44613,9 +44621,21 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", [_c("opciones")], 1),
-    _vm._v(" "),
-    _c("div", [_c("detalle")], 1)
+    _vm.loading
+      ? _c("div", [
+          _c("img", {
+            attrs: {
+              src:
+                "http://www.gifmania.com/Gif-Animados-Web/Imagenes-Rotulos-Webs/Rotulos-Cargando/Chargement-62163.gif",
+              alt: "rótulos cargando - GIFMANIA"
+            }
+          })
+        ])
+      : _c("div", [
+          _c("div", [_c("opciones")], 1),
+          _vm._v(" "),
+          _c("div", [_c("detalle")], 1)
+        ])
   ])
 }
 var staticRenderFns = []
@@ -44656,7 +44676,8 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
         carpeta: "consejo",
         protocol: window.location.protocol,
         URLdomain: window.location.host,
-        arch_pdf: ''
+        arch_pdf: '',
+        loading: false
     },
     mutations: {
         carpeta: function carpeta(state, _carpeta) {
@@ -44669,6 +44690,7 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
             state.arch_pdf = _arch_pdf;
         },
         buscar: function buscar(state) {
+            state.loading = true;
             var request = {
                 'carpeta': state.carpeta,
                 'texto': state.texto
@@ -44678,6 +44700,7 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
             axios.post(url, request).then(function (response) {
                 state.actas = response.data.data;
                 console.log('state.actas: ', state.actas);
+                state.loading = false;
             });
         }
     },

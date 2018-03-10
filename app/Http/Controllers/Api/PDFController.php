@@ -8,7 +8,7 @@ use Spatie\PdfToText\Pdf;
 
 class PDFController extends Controller
 {
-
+	/*
 	public function index($carpeta)
 	{
 		$search_path = public_path("pdf/" . $carpeta);
@@ -24,7 +24,7 @@ class PDFController extends Controller
 			'data'=>$archivos
 		];		
 	}
-
+	*/
 
 	public function searchTextInPDF(Request $request)
 	{
@@ -72,9 +72,17 @@ class PDFController extends Controller
 	protected function PDFtoTxt($path, $file_in)
 	{
     	$path_in = "/pdf/".$path."/";
-    	$arch_in = public_path($path_in . $file_in);
+    	$arch_old = public_path($path_in . $file_in);
 
-		$name_file = substr($file_in, 0, strlen($file_in)-4 );
+		$name_old = substr($file_in, 0, strlen($file_in)-4);
+
+		/* Rename PDF */
+		$error = array('°', '.', '-', '  ', ' ');
+		$ok =    array('',  '_',  '_', '_', '_');
+		$name_file = str_replace($error, $ok, $name_old);
+		$arch_in =  public_path($path_in . $name_file . '.pdf');
+		rename($arch_old, $arch_in);
+
     	$path_out = $path_in . "txt/";
     	$file_out = $name_file;
    		$arch_out = public_path($path_out . $file_out). ".txt";

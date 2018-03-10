@@ -28,8 +28,6 @@
         computed: mapState({
             actas: (state) => state.actas,
             state: (state) => state,
-//            protocol: (state) => state.protocol,
-//            URLdomain: (state) => state.URLdomain,
         }),
         methods: {
             viewActa(acta) {
@@ -41,3 +39,5 @@
         }
     }
 </script>
+
+
