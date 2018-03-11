@@ -7,7 +7,7 @@ use Illuminate\Http\Response;
 use Spatie\PdfToText\Pdf;
 use Tests\TestCase;
 
-class SearchInPDFTest extends TestCase
+class A01_SearchInPDFTest extends TestCase
 {
 
     /** @test     */

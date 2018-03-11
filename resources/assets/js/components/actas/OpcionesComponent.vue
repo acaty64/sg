@@ -19,10 +19,10 @@
             <span>Texto de búsqueda:</span> 
             <div class="row">
                 <div class="col-md-4">
-                    <input v-model="xtexto" class="form-control">
+                    <input id="xtexto" v-model="xtexto" class="form-control">
                 </div>
                 <div>
-                    <button @click='buscar(xcarpeta, xtexto)'>Buscar</button>
+                    <button @click='buscar(xcarpeta, xtexto)' id='submit'>Buscar</button>
                 </div>
             </div>
         </div>

@@ -32,8 +32,6 @@ Route::post('/pdfUpload', [
 		'uses'	=> 'Admin\PDFController@upload',
 	]);
 
-	//'Admin\PDFController@upload'); 
-
 Route::get('/api/pdf/{carpeta}', [
 		'as'	=> 'api.pdf.get',
 		'uses'	=> 'Api\PDFController@index',	
@@ -49,7 +47,3 @@ Route::get('/admin/view/pdf/{carpeta}/{acta}', [
 		'uses'	=> 'Admin\PDFController@viewActa',	
 	]);
 
-Route::post('/api/PDFtoTxt', [
-		'as'	=> 'api.pdf.PDFtoTxt',
-		'uses'	=> 'Api\PDFController@PDFtoTxt',	
-	]);

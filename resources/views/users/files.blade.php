@@ -19,7 +19,7 @@
 								{!! Form::file('archivo', $attributes = ['required', 'accept'=>'.pdf']) !!}
 							</div>
 							<div class="form-group">
-								{!! Form::submit('Grabar', ['class'=>'btn btn-md btn-primary']) !!}
+								{!! Form::submit('Grabar', ['id'=>'submit', 'class'=>'btn btn-md btn-primary']) !!}
 							</div>
 						{!! Form::close() !!}			
 					</div>

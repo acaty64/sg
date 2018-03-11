@@ -16,7 +16,7 @@ window.Vue = require('vue');
  *
  */
 
-Vue.component('example', require('./components/Example.vue'));
+//Vue.component('example', require('./components/Example.vue'));
 Vue.component('actas-component', require('./components/actas/ActasComponent.vue'));
 
 import { store } from './components/actas/store.js';

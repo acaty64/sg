@@ -4,6 +4,7 @@
             <div class="col-md-6">
                 <div class="card card-default">
                     <div class="card-header">Actas: {{state.carpeta}}</div>
+                    <div class="card-header">{{actas.length}} coincidencias.</div>
                     <div class="card-body">
                         <ul>
                             <li v-for='acta in actas'>

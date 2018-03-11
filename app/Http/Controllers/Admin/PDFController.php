@@ -62,11 +62,14 @@ class PDFController extends Controller
             $arch_out_pdf = $path_end . $fileName . '.pdf';
             $arch_out_txt = $path_end .  'txt/' . $fileName . '.txt';
             rename($arch_tmp_pdf, $arch_out_pdf);       
-            rename($arch_tmp_txt, $arch_out_txt);        
-
-            Flash::success('Se ha grabado ' . $fileName . ' en ' . $carpeta . ' de forma exitosa')->important();
+            rename($arch_tmp_txt, $arch_out_txt);
+                    
+            if(file_exists($arch_out_pdf) && file_exists($arch_out_txt)){
+                Flash::success('Se ha grabado ' . $fileName . '.pdf en ' . $carpeta . ' de forma exitosa')->important();
+            }else{
+                Flash::error('Ups!! No se ha grabado ' . $fileName . ' en ' . $carpeta)->important();
+            }
         } else {
-            Flash::error('Ups!! No se ha grabado ' . $fileName . ' en ' . $carpeta)->important();
             Flash::error($newFile['data'])->important();
         }
         

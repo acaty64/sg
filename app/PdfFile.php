@@ -21,7 +21,7 @@ class PdfFile extends Model
     	$path_out = $path_in . "txt/";
    		$arch_out = public_path($path_out . $fileName). ".txt";
 
-		$data = Pdf::getText($arch_in);
+		$data = strtoupper(Pdf::getText($arch_in));
 		
 		if(file_exists($arch_out)){
 			unlink($arch_out);
@@ -32,7 +32,7 @@ class PdfFile extends Model
 		fwrite($archivo, $data);
 
 		fclose($archivo);
-		
+
 		if (filesize($arch_out) > 0){		
 			return [
 				'success' 	=> true,
