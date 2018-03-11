@@ -48,6 +48,9 @@
             </div>
         </nav>
         <div class="container">
+            @include('flash::message')
+        </div>
+        <div class="container">
             @yield('content')
         </div>
     </div>

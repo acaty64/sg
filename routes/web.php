@@ -27,6 +27,13 @@ Route::get('/actas', function () {
     return view('users.actas');
 });
 
+Route::post('/pdfUpload', [
+		'as'	=> 'admin.pdf.upload',
+		'uses'	=> 'Admin\PDFController@upload',
+	]);
+
+	//'Admin\PDFController@upload'); 
+
 Route::get('/api/pdf/{carpeta}', [
 		'as'	=> 'api.pdf.get',
 		'uses'	=> 'Api\PDFController@index',	
@@ -40,4 +47,9 @@ Route::post('/api/pdf', [
 Route::get('/admin/view/pdf/{carpeta}/{acta}', [
 		'as'	=> 'view.pdf.search',
 		'uses'	=> 'Admin\PDFController@viewActa',	
+	]);
+
+Route::post('/api/PDFtoTxt', [
+		'as'	=> 'api.pdf.PDFtoTxt',
+		'uses'	=> 'Api\PDFController@PDFtoTxt',	
 	]);

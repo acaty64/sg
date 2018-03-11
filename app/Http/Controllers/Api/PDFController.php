@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\PdfFile;
 use Illuminate\Http\Request;
 use Spatie\PdfToText\Pdf;
 
@@ -45,7 +46,7 @@ class PDFController extends Controller
 		// Crea los archivos .txt
 		$array_files = [];
 		foreach ($archivos as $key => $value) {
-			$file_out = $this->PDFtoTxt($carpeta, $value);
+			$file_out = PdfFile::PDFtoTxt($carpeta, $value)->data;
 			array_push($array_files, $file_out);
 		};
 
@@ -65,40 +66,6 @@ class PDFController extends Controller
 		];
 		//return $rpta;
 		//echo 'total_files = '.count($array_files);
-	}
-
-	/** Transform PDF file to temp.txt
-	*/
-	protected function PDFtoTxt($path, $file_in)
-	{
-    	$path_in = "/pdf/".$path."/";
-    	$arch_old = public_path($path_in . $file_in);
-
-		$name_old = substr($file_in, 0, strlen($file_in)-4);
-
-		/* Rename PDF */
-		$error = array('°', '.', '-', '  ', ' ');
-		$ok =    array('',  '_',  '_', '_', '_');
-		$name_file = str_replace($error, $ok, $name_old);
-		$arch_in =  public_path($path_in . $name_file . '.pdf');
-		rename($arch_old, $arch_in);
-
-    	$path_out = $path_in . "txt/";
-    	$file_out = $name_file;
-   		$arch_out = public_path($path_out . $file_out). ".txt";
-
-		$data = Pdf::getText($arch_in);
-		
-		if(file_exists($arch_out)){
-			unlink($arch_out);
-		}
-		
-		$archivo = fopen($arch_out,'a');
-
-		fwrite($archivo, $data);
-
-		return $file_out;
-
 	}
 
     public function viewActa(Request $request)
